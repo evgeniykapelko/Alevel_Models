@@ -1,0 +1,10 @@
+<?php
+/** @var Alevel\Learning\Block\Post $block*/
+?>
+
+<?php foreach ($block->getPost()->getItems() as $item): ?>
+    <span>Name: <?= $item->getName();?></span><br/>
+    <span>Email: <?= $item->getEmail();?></span><br/>
+    <span>Content: <?= $item->getContent();?></span>
+------------------------------------------------------
+<?php endforeach; ?>
