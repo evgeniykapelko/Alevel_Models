@@ -18,7 +18,7 @@ interface PostRepositoryInterface
      *
      * @param int $id
      *
-     * @return PostInterface
+     * @return \Alevel\Learning\Api\Data\PostInterface
      *
      * @throws NoSuchEntityException
      */
@@ -28,18 +28,16 @@ interface PostRepositoryInterface
      *
      * @param int $id
      *
-     * @return PostInterface
+     * @return string
      *
      */
     public function deleteById(int $id);
 
     /**
-     *
-     * @param PostInterface $post
-     *
-     * @throws CouldNotSaveException
+     * @param \Alevel\Learning\Api\Data\PostInterface $post
+     * @return string
      */
-    public function save(PostInterface $post): void ;
+    public function save($post);
 
     /**
      *
@@ -50,10 +48,8 @@ interface PostRepositoryInterface
     public function getList(SearchCriteriaInterface $searchCriteria);
 
     /**
-     *
-     * @param PostInterface $post
-     *
-     * @throws CouldNotSaveException
+     * @param \Alevel\Learning\Api\Data\PostInterface $post
+     * @return string
      */
-    public function delete(PostInterface $post);
+    public function delete(\Alevel\Learning\Api\Data\PostInterface $post);
 }

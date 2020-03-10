@@ -13,6 +13,8 @@ use Alevel\Learning\Model\ResourceModel\Post as ResourceModel;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Api\DataObjectHelper;
+use Magento\Framework\Api\ExtensibleDataObjectConverter;
 
 /**
  * Class PostRepository.
@@ -46,6 +48,12 @@ class PostRepository implements PostRepositoryInterface
      */
     protected $searchResultsFactory;
 
+    /** @var \Magento\Framework\Api\DataObjectHelper $dataObjectHelper */
+    protected $dataObjectHelper;
+
+    /** @var ExtensibleDataObjectConverter $dataObjectConverter */
+    protected $dataObjectConverter;
+
     /**
      * PostRepository constructor.
      *
@@ -60,19 +68,23 @@ class PostRepository implements PostRepositoryInterface
         PostFactory $postFactory,
         CollectionProcessorInterface $collectionProcessor,
         CollectionFactory $collectionFactory,
+        DataObjectHelper $dataObjectHelper,
+        ExtensibleDataObjectConverter $dataObjectConverter,
         PostSearchResultsInterfaceFactory $postSearchResultsInterfaceFactory
     ) {
         $this->resource = $resource;
         $this->postFactory = $postFactory;
         $this->collectionProcessor = $collectionProcessor;
         $this->collectionFactory = $collectionFactory;
+        $this->dataObjectHelper = $dataObjectHelper;
+        $this->dataObjectConverter = $dataObjectConverter;
         $this->searchResultsFactory = $postSearchResultsInterfaceFactory;
     }
 
     /**
      * @param int $id
      *
-     * @return PostInterface|void
+     * @return \Alevel\Learning\Api\Data\PostInterface|void
      * @throws NoSuchEntityException
      */
     public function getById(int $id)
@@ -83,25 +95,40 @@ class PostRepository implements PostRepositoryInterface
         if (!$post->getId()) {
             throw new NoSuchEntityException(__('Post with id "%1" does not exist.', $id));
         }
-    }
 
-    public function deleteById(int $id)
-    {
-        $this->delete($this->getById($id));
+        return $post;
     }
 
     /**
-     * @param PostInterface $post
      *
-     * @throws CouldNotSaveException
+     * @param int $id
+     *
+     * @return string
      */
-    public function save(PostInterface $post): void
+    public function deleteById(int $id)
     {
-        try {
-            $this->resource->save($post);
-        } catch (\Exception $exception) {
-            throw new CouldNotSaveException(__($exception->getMessage()));
-        }
+        $this->delete($this->getById($id));
+
+        $deleted = 'deleted';
+        return $deleted;
+    }
+
+    /**
+     * @param \Alevel\Learning\Api\Data\PostInterface $post
+     * @return string
+     */
+    public function save($post)
+    {
+        $postObject = $this->postFactory->create();
+
+        $itemData = $this->dataObjectConverter->toNestedArray($post, [], PostInterface::class);
+
+        $postObject->setData($itemData);
+        $this->resource->save($postObject);
+
+        $success = 'success';
+
+        return $postObject->getId();
     }
 
     /**
@@ -124,11 +151,10 @@ class PostRepository implements PostRepositoryInterface
     }
 
     /**
-     * @param PostInterface $post
-     *
-     * @return $this
+     * @param \Alevel\Learning\Api\Data\PostInterface $post
+     * @return string
      */
-    public function delete(PostInterface $post)
+    public function delete(\Alevel\Learning\Api\Data\PostInterface $post)
     {
         try {
             $this->resource->delete($post);
@@ -136,6 +162,7 @@ class PostRepository implements PostRepositoryInterface
             throw new CouldNotDeleteException(__($exception->getMessage()));
         }
 
-        return $this;
+        $deleted = 'deleted';
+        return $deleted;
     }
 }

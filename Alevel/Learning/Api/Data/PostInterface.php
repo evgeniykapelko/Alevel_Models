@@ -6,7 +6,7 @@ namespace Alevel\Learning\Api\Data;
  * Interface PostInterface
  * @package Alevel\Learning\Api\Data
  */
-interface PostInterface
+interface PostInterface extends \Magento\Framework\Api\ExtensibleDataInterface
 {
     const ENTITY_ID = 'entity_id';
     const NAME = 'name';
@@ -16,9 +16,14 @@ interface PostInterface
     const TELEPHONE = 'telephone';
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId();
+
+    /**
+     * @return int
+     */
+    public function setId($id);
 
     /**
      * @return string
@@ -28,12 +33,27 @@ interface PostInterface
     /**
      * @return string
      */
+    public function setName($name);
+
+    /**
+     * @return string
+     */
     public function getEmail();
 
     /**
      * @return string
      */
+    public function setEmail($email);
+
+    /**
+     * @return string
+     */
     public function getContent();
+
+    /**
+     * @return string
+     */
+    public function setContent($content);
 
     /**
      * @return string

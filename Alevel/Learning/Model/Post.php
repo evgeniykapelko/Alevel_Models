@@ -31,6 +31,11 @@ class Post extends AbstractModel implements PostInterface
         return $this->getData(PostInterface::NAME);
     }
 
+    public function setName($name)
+    {
+        return $this->setData(PostInterface::NAME, $name);
+    }
+
     /**
      * @return mixed
      */
@@ -39,12 +44,22 @@ class Post extends AbstractModel implements PostInterface
         return $this->getData(PostInterface::EMAIL);
     }
 
+    public function setEmail($email)
+    {
+        return $this->setData(PostInterface::EMAIL, $email);
+    }
+
     /**
      * @return mixed
      */
     public function getContent()
     {
         return $this->getData(PostInterface::CONTENT);
+    }
+
+    public function setContent($content)
+    {
+        return $this->setData(PostInterface::CONTENT, $content);
     }
 
     /**

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+<route url="/V1/alevel" method="POST"><!--work -->
+    <service class="Alevel\Learning\Api\PostRepositoryInterface" method="save"/>
+    <resources>
+        <resource ref="self"/>
+    </resources>
+</route>
+
+<route url="/V1/alevel/:id" method="GET"><!-- work -->
+    <service class="Alevel\Learning\Api\PostRepositoryInterface" method="getById"/>
+    <resources>
+        <resource ref="anonymous"/>
+    </resources>
+</route>
+
+<route url="/V1/alevel/:id" method="DELETE"><!-- work -->
+    <service class="Alevel\Learning\Api\PostRepositoryInterface" method="deleteById"/>
+    <resources>
+        <resource ref="anonymous"/>
+    </resources>
+</route>
+<route url="/V1/alevel/:id" method="PUT">
+    <service class="Alevel\Learning\Api\PostRepositoryInterface" method="update"/>
+    <resources>
+        <resource ref="anonymous"/>
+    </resources>
+</route>
+</routes>

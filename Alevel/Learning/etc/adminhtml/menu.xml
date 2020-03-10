@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+                id="Alevel_Learning::coupon"
+                title="Coupon"
+                module="Alevel_Learning"
+                sortOrder="51"
+                resource="Alevel_Learning::coupon"
+        />
+        <add
+                id="Alevel_Learning::config"
+                title="Show Config"
+                module="Alevel_Learning"
+                sortOrder="10"
+                action="aleveladmin/index/index"
+                resource="Alevel_Learning::config"
+                parent="Alevel_Learning::coupon"
+        />
+        <add
+                id="Alevel_Learning::coupon_configuration"
+                title="Configuration"
+                module="Alevel_Learning"
+                sortOrder="99"
+                parent="Alevel_Learning::coupon"
+                action="adminhtml/system_config/edit/section/coupon"
+                resource="Alevel_Learning::coupon_configuration"
+        />
+        <add
+                id="Magento_Cms::coupon_cms_page"
+                title="Show pages"
+                module="Alevel_Learning"
+                sortOrder="99"
+                parent="Alevel_Learning::coupon"
+                action="cms/page"
+                resource="Magento_Cms::page"
+        />
+    </menu>
+</config>

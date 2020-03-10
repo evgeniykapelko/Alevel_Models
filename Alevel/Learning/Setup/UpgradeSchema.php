@@ -37,7 +37,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
         $this->connection = $setup->getConnection();
 
         /**  version_compare() returned 1 if the second is lower. */
-        if (version_compare($context->getVersion(), '1.0.0') < 0) {
+        if (version_compare($context->getVersion(), '3.0.0') < 0) {
             $this->addColumnTelephone();
         }
 
@@ -60,3 +60,6 @@ class UpgradeSchema implements UpgradeSchemaInterface
         );
     }
 }
+
+
+
